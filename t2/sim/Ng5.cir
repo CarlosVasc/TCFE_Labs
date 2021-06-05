@@ -1,0 +1,46 @@
+*Bode simulation
+
+.options savecurrents
+
+.include ../doc/ngspice_5.txt
+
+.model P2model NPN(Bf=200, CJE=12pF, CJC=2pF)
+
+.control
+
+*makes plots in color
+set hcopypscolor=0
+set color0=white
+set color1=black
+set color2=red
+set color3=blue
+set color4=violet
+set color5=rgb:3/8/0
+set color6=rgb:4/0/0
+
+
+
+op
+
+echo "********************************************"
+echo  "Frequency analysis"
+echo "********************************************"
+
+ac dec 100 0.1 1MEG
+
+
+
+hardcopy db_sim.eps vdb(V6) vdb(V1) xlimit 1 1MEG ylabel 'gain'
+
+hardcopy ph_sim1.eps ph(V6) ph(V1) xlimit 1 1MEG ylabel 'in radian'
+
+let ph2(V6) = 90 + (180/PI*ph(V6))
+let ph2(VS) = 90 + (180/PI*ph(V1))
+
+hardcopy ph_sim2.eps ph2(V6) ph2(Vs) xlimit 1 1MEG ylabel 'in degrees'
+
+
+quit
+
+.endc
+.end

@@ -1,0 +1,51 @@
+*
+* NGSPICE simulation script
+* BJT amp with feedback
+*
+
+* forces current values to be saved
+.options savecurrents
+
+
+Va 0 6 5.11324505775
+R1 1 0 1.0162457409k
+R2 1 2 2.05507529065k
+R3 1 7 3.14574535918k
+R4 7 6 4.03531015178k
+R5 7 3 3.10425245864k
+vf 6 8 0
+R6 8 5 2.0191831586k
+R7 5 4 1.03927082306k
+Id 4 3 1.00396804542m
+Gb 3 2 1 7 7.27390671914m
+Hc 7 4 vf 8.11887433018k
+
+
+
+.model P2model NPN(Bf=200, CJE=12pF, CJC=2pF)
+
+.control
+
+*makes plots in color
+set hcopypscolor=0
+set color0=white
+set color1=black
+set color2=red
+set color3=blue
+set color4=violet
+set color5=rgb:3/8/0
+set color6=rgb:4/0/0
+
+op
+
+
+
+echo  "op_TAB"
+print all
+echo  "op_END"
+
+
+quit
+.endc
+
+.end

@@ -1,0 +1,88 @@
+close all
+clear all
+pkg load symbolic
+pkg load control
+pkg load signal
+%--------------------  DADOS  ----------------------- 
+
+Vfonte = 230;
+f=50;
+w=2*pi*f;
+
+R1 = 10000;
+C = 10e-6;
+R2 = 1000;
+voltas = 17;
+
+A = Vfonte/voltas;
+
+%------------------------Envelope Detector----------------------
+t=linspace(0, 0.2, 1000);
+
+vs=A*cos(w*t); %depois de transformador
+
+toff = 1/w * atan(1/(w*R1*C));
+
+v_fex = A*cos(w*toff)*exp(-(t-toff)/(R1*C));
+
+for i=1:length(t)
+	  v0hr(i) = abs(vs(i));
+end
+
+for i=1:length(t)
+  if t(i) < toff
+    v0(i) = v0hr(i);
+  elseif v_fex(i) > v0hr(i)
+    v0(i) = v_fex(i);
+  else 
+    toff = toff + 1/(2*f) ;
+    v_fex = A*abs(cos(w*toff))*exp(-(t-toff)/(R1*C));
+    v0(i) = v0hr(i);
+  end
+end
+
+average = mean(v0);
+ripple = max(v0) - min(v0);
+
+
+%-------------------------Voltage Regulator----------------------------------
+
+n_diodes = 19;
+Von = 0.632;
+
+v0_2_dc = Von*n_diodes;
+
+vt = 0.025;
+Is = 1e-14;
+n = 1;
+
+Rd = n*vt/(Is*exp(Von/(n*vt)))
+
+for i = 1:length(t)
+    v0_2_ac(i) = n_diodes*Rd/(n_diodes*Rd+R2) * (v0(i)-average);
+end
+
+v0_2 = v0_2_dc + v0_2_ac;
+
+average_reg = mean(v0_2)
+ripple_reg = max(v0_2)-min(v0_2) 
+
+cost = R1/1000 + R2/1000 + C*1e6 + (n_diodes+0.4)*0.1; 
+MERIT = 1/(cost*(ripple_reg + abs(average_reg - 12) + 1e-6))
+
+
+%plots ----
+fid1 = figure();
+plot (t*1000, vs, ";vs transformer;", t*1000,v0, ";vo envelope;", t*1000,v0_2, ";vo regulator;");
+xlabel ("t[ms]")
+ylabel ("v_O [Volts]")
+legend('Location','southeast');
+print (fid1, "V_todas.eps", "-depsc");
+
+
+fid2 = figure();
+plot (t*1000,v0_2-12);
+xlabel ("t[ms]")
+ylabel ("v_O [Volts]")
+print (fid2, "diferença.eps", "-depsc");
+

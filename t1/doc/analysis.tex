@@ -1,0 +1,200 @@
+\section{Theoretical Analysis}
+\label{sec:analysis}
+
+\subsection{Mesh Method}
+\label{subsec:mesh}
+
+The circuit consists of four elementary meshes: (a), (b), (c) and (d), respectively associated with mesh currents $I_a$, $I_b$, $I_c$ and $I_d$ (seen in Figure \ref{fig:esq}) and with equations Eq. (a), Eq. (b),  Eq. (c) and Eq. (d): these are the result of the direct application of the mesh method and they are respectively presented as the first four equations in the system of linear equations \ref{eq:mesh_syst}.
+
+Since the current in the dependent current source is a function of $V_b$, a four equation system would be undetermined. Hence, $V_b$ is equated as a function of the mesh currents passing through $R_3$, in the fifth equation of the system \ref{eq:mesh_syst}. 
+
+\begin{equation}
+    \begin{cases}
+      I_a \cdot R_1 + V_a + I_a \cdot R_4 - I_c \cdot R_4 + I_a \cdot R_3 - I_b \cdot R_3 = 0\\
+      I_b = K_b \cdot V_b\\
+      I_c \cdot R_4 - I_a \cdot R_4 + I_c \cdot R_6 + I_c \cdot R_7 - K_c \cdot I_c = 0\\
+      I_d = I_d\\
+      V_b = R_3 \cdot ( I_b - I_a )\\
+    \end{cases}\,.
+    \label{eq:mesh_syst}
+\end{equation}
+
+This system can be presented in matrix form as in~\ref{eq:mesh_matrix}
+
+\begin{gather}
+    \begin{bmatrix} 
+      \ (R_1 + R_4 + R_3) & -R_3 & -R_4 & 0 & 0 \\ 0 & 1 & 0 & 0 & -K_b \ \\ -R_4 & 0 & (R_4 + R_6 + R_7 - K_c) & 0 & 0 \\ 0 & 0 & 0 & 1 & 0 \\ R_3 & -R_3 & 0 & 0 & 1
+    \end{bmatrix}
+    \begin{bmatrix}
+      \ I_a \ \\ I_b \\ I_c \\ I_d \\ V_b 
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+      \ -V_a \ \\ 0 \\ 0 \\ I_d \\ 0 
+    \end{bmatrix}
+    \label{eq:mesh_matrix}
+\end{gather}
+
+and computed in Octave scripts, from which the Table~\ref{tab:op1} is obtained.
+
+\begin{table}[h]
+  \centering
+  \begin{tabular}{|l|r|}
+    \hline    
+    {\bf Name} & {\bf Value [A]} \\ \hline
+    \input{tabelaMalhas}
+  \end{tabular}
+  \caption{Values for the currents obtained from mesh method.}
+  \label{tab:op1}
+\end{table}
+
+As learned in theory classes and understood from Figure~\ref{fig:esq}, the current in a branch is a function of the mesh currents the branch is associated with. If the branch is associated with only one mesh current, then its current equals the mesh current. That is not the case for the branches formed by the $R_3$, $R_4$, $R_5$ and $V_c$ components. To determined those currents, the equations \ref{eq:R_3}, \ref{eq:R_4}, \ref{eq:R_5}, and \ref{eq:V_c} are used.
+
+\begin{equation}
+  I_{R_3}=I_a-I_b
+  \label{eq:R_3}
+\end{equation}
+in which $I_{R_3}$ is the current flowing from node 7 to 1.
+\begin{equation}
+  I_{R_4}=I_a-I_c
+  \label{eq:R_4}
+\end{equation}
+in which $I_{R_4}$ is the current flowing from node 6 to 7.
+
+\begin{equation}
+  I_{R_5}=I_d-I_b
+  \label{eq:R_5}
+\end{equation}
+in which $I_{R_5}$ is the current flowing from node 3 to 7.
+
+\begin{equation}
+  I_{V_C}=I_d-I_c
+  \label{eq:V_c}
+\end{equation}
+in which $I_{V_C}$ is the current flowing from node 7 to 4.
+
+The results obtained with Octave are presented in Table~\ref{tab:op2}.
+
+\begin{table}[h]
+  \centering
+  \begin{tabular}{|l|r|}
+    \hline    
+    {\bf Name} & {\bf Value [A]} \\ \hline
+    \input{tabelaAux}
+  \end{tabular}
+  \caption{Values for other currents that share more than one mesh.}
+  \label{tab:op2}
+\end{table}
+
+
+
+\subsection{Node Method}
+\label{subsec:node}
+
+
+The circuit consists of 8 nodes: 0 (ground), 1, 2, 3, 4, 5, 6 and 7, respectively associated with nodal voltages $V_0$, $V_1$, $V_2$, $V_3$, $V_4$, $V_5$, $V_6$ and $V_7$ (seen in Figure~\ref{fig:esq}). 
+
+
+The nodal equations obtained with the nodal method pertain to the mentioned nodes as presented next. 
+The following "nodal" equations are KCL equations applied to the nodes, except equations \ref{eq:N_0}, \ref{eq:N_4_2} 
+and \ref{eq:N_6}. \\
+\\
+\textit{Node 0}:
+\begin{equation}
+  V_0=0
+  \label{eq:N_0}
+\end{equation}
+\textit{Node 1}:
+\begin{equation}
+    (V_1 - V_0) \cdot G_1 + (V_1 - V_2) \cdot G_2 + V_b \cdot G_3 = 0
+    \label{eq:N_1}
+\end{equation}
+\textit{Node 2}:
+\begin{equation}
+    (V_2 - V_1) \cdot G_2 - K_b \cdot V_b = 0
+    \label{eq:N_2}
+\end{equation}
+\textit{Node 3}:
+\begin{equation}
+    (V_3 - V_7) \cdot G_5 - I_d + K_b \cdot V_b = 0
+    \label{eq:N_3}
+\end{equation}
+\textit{Node 4}:
+\begin{equation}
+    (V_5 - V_4) \cdot G_7 + I_{V_C} - I_d = 0
+    \label{eq:N_4_1}
+\end{equation}
+\begin{equation}
+    V_4 = - V_c + V_7
+    \label{eq:N_4_2}
+\end{equation}
+\textit{Node 5}:
+\begin{equation}
+  (V_5 - V_6) \cdot G_6 + (V_5 - V_4) \cdot G_7 = 0
+  \label{eq:N_5}
+\end{equation}
+\textit{Node 6}:
+\begin{equation}
+    V_6 = - V_a
+  \label{eq:N_6}
+\end{equation}
+\textit{Node 7}:
+\begin{equation}
+  I_{V_C} + (V_7 - V_3) \cdot G_5 + (V_7 - V_2) \cdot G_3 + (V_7 - V_6) \cdot G_4 = 0
+  \label{eq:N_7}
+\end{equation}
+
+To obtain a determined linear system of equations, three other equations are added. Both $V_b$ and $I_c$ need to be written as a function of nodal voltages, as shown in equations \ref{eq:Add_Vb} and \ref{eq:Add_Ic}. $V_C$ should be equated as shown in Figure \ref{fig:esq} and as written in equation \ref{eq:Add_Vc}.
+
+\begin{equation}
+    V_b = V_1 - V_7
+    \label{eq:Add_Vb}
+\end{equation}
+
+\begin{equation}
+    V_5 + I_c \cdot R_6 = V_6 \Leftrightarrow I_c = (V_6 - V_5) \cdot G_6
+    \label{eq:Add_Ic}
+\end{equation}
+
+\begin{equation}
+    V_c = K_c \cdot I_c
+    \label{eq:Add_Vc}
+\end{equation}
+
+
+Applying the added equations \ref{eq:Add_Vb}, \ref{eq:Add_Ic} and \ref{eq:Add_Vc} to the previously presented nodal 
+equations, the system of linear equations (produced in matrix form) is \ref{eq:nodal_matrix}
+
+\begin{gather}
+  \begin{bmatrix} 
+    (G_1 + G_2 + G_3) & -G_2 & 0 & 0 & 0 & 0 & -G_3 & 0 \\ -G_2 - K_b & G_2 & 0 & 0 & 0 & 0 & K_b & 0 \\ K_b & 0 & G_5 & 0 & 0 & 0 & (-K_b-G_5) & 0 \\ 0 & 0 & 0 & -G_7 & (G_6+G_7) & -G_6 & 0 & 0 \\ 0 & 0 & 0 & 1 & (-K_c \cdot G_6) & (K_c \cdot G_6) & -1 & 0 \\ 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 \\ 0 & 0 & 0 & G_7 & -G_7 & 0 & 0 & -1 \\ -G_3 & 0 & -G_5 & 0 & 0 & -G_4 & (G_4 + G_5 + G_3) & 1  
+  \end{bmatrix}
+  \begin{bmatrix}
+    V_1 \\ V_2 \\ V_3 \\ V_4 \\ V_5 \\ V_6 \\ V_7 \\ I_{V_C}
+  \end{bmatrix}
+    =
+  \begin{bmatrix}
+    0 \\ 0 \\ I_d \\ 0 \\ 0 \\ -V_a \\ -I_d \\ 0
+  \end{bmatrix}
+  \label{eq:nodal_matrix}
+\end{gather}
+
+
+Lastly, an Octave script running \ref{eq:nodal_matrix} is used to obtain the results in Table~\ref{tab:op3}.
+
+
+\begin{table}[h]
+  \centering
+  \begin{tabular}{|l|r|}
+    \hline    
+    {\bf Name} & {\bf Value [A or V]} \\ \hline
+    \input{tabelaNos}
+  \end{tabular}
+  \caption{Values for the components using the node method.}
+  \label{tab:op3}
+\end{table}
+
+
+
+
+

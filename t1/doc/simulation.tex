@@ -1,0 +1,28 @@
+\section{Simulation Analysis}
+\label{sec:simulation}
+
+To accurately simulate the circuit in ngspice, precaution is needed with the positive and negative nodes associated with each component, since an error in these parameters would cause currents and voltage sources operating in the wrong direction.
+
+It's important to add that due to a peculiarity of the program, we couldn't get the current in the resistance $R_5$ as a reference for the current dependent voltage source. To solve that, we created a dummy source($V_8$ with value 0) in that branch so that the program could get a valid read. That is the reason why in the table \ref{tab:op} we have $V_8$ with the value that $V_6$.
+
+Table~\ref{tab:op} shows the simulated operating point results for the circuit
+under analysis were is present the values of the current through all components as well as the voltages in each node. 
+
+
+\begin{table}[h]
+  \centering
+  \begin{tabular}{|l|r|}
+    \hline    
+    {\bf Name} & {\bf Value [A or V]} \\ \hline
+    \input{op_tab}
+  \end{tabular}
+  \caption{Simulation results; A variable preceded by @ is of type {\em current}
+    and expressed in Ampere; other variables are of type {\it voltage} and expressed in
+    Volt.}
+  \label{tab:op}
+\end{table}
+
+
+Comparing these results with the previous tables given with octave, it can easily be seen that our results match, reasons from which will be mentioned in the next section.
+Diferences in the signal of some currents are due to assumptions previosly made in the direction of 
+the current flow.

@@ -1,0 +1,25 @@
+
+.options savecurrents
+
+
+.include ../doc/ngspice_2.txt
+
+.model P2model NPN(Bf=200, CJE=12pF, CJC=2pF)
+
+.control
+
+op
+
+echo "********************************************"
+echo  "Operating point 2"
+echo "********************************************"
+
+echo  "op_TAB2"
+print all
+echo  "op_END2"
+
+
+quit
+
+.endc 
+.end

@@ -1,0 +1,94 @@
+
+*forces current values to be saved
+.options savecurrents
+
+
+*define diode
+.model Default D
+
+
+*voltage source n = 17
+Vtrans 1 2 sin(0 13.5294 50 0 0 90)
+
+
+*envelope detector circuit
+R1 3 0 20000
+
+C 3 0 0.00001
+
+D0 0 1 Default
+D1 1 3 Default
+D2 0 2 Default
+D3 2 3 Default
+
+
+*regulator
+
+R2 3 4 2000
+
+D4 4 5 Default
+D5 5 6 Default
+D6 6 7 Default
+D7 7 8 Default
+D8 8 9 Default
+D9 9 10 Default
+D10 10 11 Default
+D11 11 12 Default
+D12 12 13 Default
+D13 13 14 Default
+D14 14 15 Default
+D15 15 16 Default
+D16 16 17 Default
+D17 17 18 Default
+D18 18 19 Default
+D19 19 20 Default
+D20 20 0 Default
+
+
+
+
+*simulations
+.control
+
+
+*colours
+set hcopypscolor=1
+set color0=white
+set color1=black
+set color2=red
+set color3=blue
+set color4=violet
+set color5=rgb:3/8/0
+set color6=rgb:4/0/0
+
+
+*transient/circuit simulation
+tran 0.000015 200e-3
+
+
+*the rest
+meas tran v_avg AVG v(4) from=0m to=100e-3
+meas tran v_max MAX v(4) from=0m to=100e-3
+meas tran v_min MIN v(4) from=0m to=100e-3
+print v_avg
+print v_max-v_min
+
+plot v(3)
+hardcopy v_3.eps v(3)
+
+plot v(4)
+hardcopy v_4.eps v(4)
+
+plot (v(4)-12)
+hardcopy delta_v.eps v(4)-12
+
+
+quit
+.endc
+.end
+
+
+
+
+
+

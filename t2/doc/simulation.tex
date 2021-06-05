@@ -1,0 +1,206 @@
+\section{Simulation Analysis}
+\label{sec:simulation}
+
+To accurately simulate the circuit in \textit{Ngspice}, precaution is needed with the positive and negative nodes associated with each component, since an error in these parameters would cause currents and voltage sources operating in the wrong direction.
+
+It's important to add that due to a peculiarity of the program, we couldn't get the current in the resistance $R_6$ as a reference for the current dependent voltage source. To solve that, we created a "dummy" voltage source (valued 0) right below the ground node in that same branch, so that the program could get a valid read.
+
+
+\subsection{Operating Point Analysis for $t<0$}
+\label{subsec:OP_t<0}
+
+Table \ref{tabopS} shows the simulated operating point results for the circuit under analysis at $t<0$, analogous to the one in subsection \ref{subsec:node}
+
+\begin{table}[!ht]
+  \centering
+  \begin{tabular}{|l|r|}
+    \hline    
+    {\bf Name} & {\bf Value} \\ \hline
+    \input{op_tab1}
+  \end{tabular}
+  \caption{Values for each component in operating point}
+  \label{tabopS}
+\end{table}
+
+\newpage
+
+\subsection{Operating Point Analysis for $t=0$}
+\label{subsec:OP_t=0}
+
+
+The purpose in simulating the operation point in a circuit analogous to the one in Subsection \ref{subsec:Req_theory} is getting the boundary/initial conditions $V_6(t=0)$ and $V_8(t=0)$, which will be needed in the following subsections. The values obtained are in table \ref{tabop2S}
+
+\begin{table}[!ht]
+  \centering
+  \begin{tabular}{|l|r|}
+    \hline    
+    {\bf Name} & {\bf Value} \\ \hline
+    \input{op_tab2}
+  \end{tabular}
+  \caption{Values for each component in operating point}
+  \label{tabop2S}
+\end{table}
+
+\newpage
+
+%Note that $v_6(t=0)$ is very similar to $v_x(t=0)$ and $v_8(t=0)$ is near zero.
+
+
+\subsection{Transient Analysis for natural solution}
+\label{subsec:trans_nat}
+
+In the present subsection, we perform a transient analysis to the original circuit in Figure \ref{fig:OG_circ} (adding the "dummy" null voltage source mentioned in the beginning of this section) with $v_s = 0$, and using $V_6$ and $V_8$, obtained in the previous subsection, as boundary conditions, in order to obtain $v_{6n}(t)$ in the [0, 20]ms time interval.
+
+The results are plotted in Figure \ref{plot3S}.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.6\linewidth]{sim_3.eps}
+\caption{Natural Solution in $V_6$}
+\label{plot3S}
+\end{figure}
+
+\newpage
+
+
+\subsection{Transient Analysis for total solution}
+\label{subsec:trans_total}
+
+In this subsection, we perform a transient analysis analogous to the last, except the voltage source is now the sinusoidal signal $sin(2 \pi f t)$, being $f = 1kHz$.
+
+In Figure \ref{plot4S}, both the stimulus and $v_6(t)$ response are plotted for the time interval [0, 20]ms.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.6\linewidth]{simulacao4.eps}
+\caption{Total Solution for $V_6$ and $V_s$.}
+\label{plot4S}
+\end{figure}
+
+\newpage
+
+\subsection{Frequency Analysis}
+\label{subsec:freq_sim}
+
+
+Lastly, the voltage signals $v_6$ and $v_s$ are analysed as functions of frequency, using units and intervals identical to the ones described in Subsection \ref{subsec:freq_theory}. The bode diagram computing the signals' magnitude and phase are, hence, presented in the following figures.
+
+\begin{figure}[!ht]
+  \centering
+  \includegraphics[width=0.6\linewidth]{db_sim.eps}
+  \caption{Magnitude bode diagram for $V_6(f)$ and $V_s(f)$ in dBs}
+  \label{bode1_sim}
+\end{figure}
+
+\begin{figure}[!ht]
+  \centering
+  \includegraphics[width=0.6\linewidth]{ph_sim2.eps}
+  \caption{Phase bode diagram for $V_6(f)$ and $V_s(f)$ in degrees}
+  \label{bode2_sim}
+\end{figure}
+
+\subsection{Comparisons}
+
+In this last subsection, we present the tables and plots obtained from the Theoretical Analysis and the Simulations Analysis that refer to the same sets of evaluations, for visualization purposes, and comment on their similarities or discrepancies.
+
+While analysing the mesh currents and nodal voltages in $t<0$, the tables in Figure \ref{fig:t<0_comp} were determined. Left and right tables are theoretical and simulation results for $t<0$, respectively.
+
+
+
+\begin{figure}[ht!]
+    \centering
+    \begin{tabular}{|l|r|}
+        \hline    
+        {\bf Name} & {\bf Value in [V] or [A]} \\ \hline
+        \input{teorico1.tex}
+    \end{tabular}
+\quad
+    \begin{tabular}{|l|r|}
+        \hline    
+        {\bf Name} & {\bf Value in [V] or [A]} \\ \hline
+        \input{op_tab1.tex}
+    \end{tabular}
+    \caption{Theoretical and simulation results for $t<0$.}
+    \label{fig:t<0_comp}
+\end{figure}
+
+While analysing for the circuit for $t=0$, the tables in Figure ?? were determined
+
+\begin{figure}[ht!]
+    \centering
+    \begin{tabular}{|l|r|}
+        \hline    
+        {\bf Name} & {\bf Value (SI units, not powers of ten)} \\ \hline
+        \input{teorico2.tex}
+    \end{tabular}
+\quad
+    \begin{tabular}{|l|r|}
+        \hline    
+        {\bf Name} & {\bf Value in [V] or [A]} \\ \hline
+        \input{op_tab2.tex}
+    \end{tabular}
+    \caption{Theoretical and simulation results for $t<0$.}
+    \label{fig:t<0_comp}
+\end{figure}
+
+Note that, since there is no current flowing through $R_2$, $I_{R_5} = I_x$.
+
+Between all the aforementioned tables, it can be seen that the results are almost identical. The discrepancies begin, at worse, in the fifth decimal place. These inaccuracies can be attributed to the different approximations or types of variables the \textit{Octave} math tool and \textit{Ngspice} software may use.
+
+In the following figures, plotted for time and frequency analysis, we can also notice the near perfect match. Considering this is a relatively simple linear circuit, this was to be expected.
+
+\begin{figure}[ht]
+    \centering
+    \begin{subfigure}{.45\textwidth}
+        \centering
+        \includegraphics[width=.95\linewidth]{Teoria_3_Fig.eps}
+    \end{subfigure}
+    \begin{subfigure}{.45\textwidth}
+        \centering
+        \includegraphics[width=.85\linewidth]{sim_3.eps}
+    \end{subfigure}
+    \caption{Natural solution.}
+\end{figure}
+
+\begin{figure}[ht]
+    \centering
+    \begin{subfigure}{.45\textwidth}
+        \centering
+        \includegraphics[width=.95\linewidth]{Teoria_5_Fig.eps}
+    \end{subfigure}
+    \begin{subfigure}{.45\textwidth}
+        \centering
+        \includegraphics[width=.85\linewidth]{simulacao4.eps}
+    \end{subfigure}
+    \caption{Total solution.}
+\end{figure}
+
+
+\begin{figure}[ht]
+    \centering
+    \begin{subfigure}{.45\textwidth}
+        \centering
+        \includegraphics[width=.95\linewidth]{db_teorica.eps}
+    \end{subfigure}
+    \begin{subfigure}{.45\textwidth}
+        \centering
+        \includegraphics[width=.85\linewidth]{db_sim.eps}
+    \end{subfigure}
+    \caption{Magnitude with bode diagrams.}
+\end{figure}
+
+
+\begin{figure}[ht]
+    \centering
+    \begin{subfigure}{.45\textwidth}
+        \centering
+        \includegraphics[width=.95\linewidth]{fase_teorica.eps}
+    \end{subfigure}
+    \begin{subfigure}{.45\textwidth}
+        \centering
+        \includegraphics[width=.85\linewidth]{ph_sim2.eps}
+    \end{subfigure}
+    \caption{Phase with bode diagrams.}
+\end{figure}
+
+\newpage
