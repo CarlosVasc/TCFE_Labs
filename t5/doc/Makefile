@@ -46,6 +46,6 @@ ngspice2.log: ../sim/t5_Zout.net
 clean:
 	@rm -rf *.aux *.bbl *.blg *.glg *.glo *.gls *.ilg *.ist *.lof
 	@rm -rf *.log *.lot *.nlo *.nls *.out *.toc *~ *.*% ./*.pdf ./*.ps
-	@rm -rf *_tab.tex octave-workspace *.eps *.fls *.fdb_latexmk
+	@rm -rf *_tab.tex octave-workspace *.eps *.fls *.fdb_latexmk Val_meio.tex valore.tex merit.tex
 
 .PHONY: all clean ngspice octave
