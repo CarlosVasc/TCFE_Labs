@@ -1,10 +1,85 @@
 \section{Theoretical Analysis}
 \label{sec:analysis}
 
-In this section, the circuit shown in Figure~\ref{fig:rc} is analysed
-theoretically, in terms of its time and frequency responses.
+In this section the values used are present in the table \ref{tab:values}:
 
-\section{Time response}
+\begin{table}[h]
+  \centering
+  \begin{tabular}{|l|r|}
+    \hline    
+    {\bf Name} & {\bf Value [A]} \\ \hline
+    \input{valores}
+  \end{tabular}
+  \caption{Values for the capacitors and resistence used}
+  \label{tab:values}
+\end{table}
 
 
+
+In order to get a good theoretical analises of a bandpass filter using an OP amp, we first determined the gain variation with the frequency with the next formula.
+
+
+
+\begin{equation}
+    \left ( \frac{R_1wC_1}{1+R_1wC_1j} \right )\times\left ( 1+\frac{R_4}{R_3} \right )\times\left ( \frac{1}{1+jwC_2R_2} \right )
+\end{equation}
+
+These values can easily be converted to a plot with a logarithm scale, that can be seen in Fig.\ref{fig:gain}
+
+\begin{figure}[!ht] 
+\centering
+\includegraphics[width=0.6\linewidth]{Gain_teo.eps}
+\caption{Gain frequêncy responce}
+\label{fig:gain}
+\end{figure}
+
+Once we have this response, the other values are easy to find, the central frequency corresponds to the maximum gain.
+These values can be found in table \ref{tab:values_meio}
+
+
+
+\begin{table}[h]
+  \centering
+  \begin{tabular}{|l|r|}
+    \hline    
+    {\bf Name} & {\bf Value [A]} \\ \hline
+    \input{Val_meio}
+  \end{tabular}
+  \caption{Table of Gain, Input and output impedance}
+  \label{tab:values_meio}
+\end{table}
+
+
+
+Regarding the impedances in the input and output, these are given by:
+
+
+\begin{equation}
+    Z_{in}= R_1+\frac{1}{jw_{central} C_1}
+\end{equation}
+
+
+\begin{equation}
+   Z_{out}= \frac{R_2}{jw_{central}C_2}/\left ( R_2+\frac{1}{2w_{central}C_2} \right )
+\end{equation}
+
+
+Regarding the values of cost and merit obtained with this circuit are:
+
+\begin{table}[h]
+  \centering
+  \begin{tabular}{|l|r|}
+    \hline    
+    {\bf Name} & {\bf Value [A]} \\ \hline
+    \input{merit}
+  \end{tabular}
+  \caption{Values for the Merit calculation}
+  \label{tab:merito}
+\end{table}
+
+With cost being calculated with:
+
+\begin{equation}
+    Cost = 1\times 10^{-3}\times \left ( R_1+R_2+R_3+R_4 \right )+1\times 10^{6}\times\left ( C_1+C_2 \right ) + Cost_{amp}
+\end{equation}
 
