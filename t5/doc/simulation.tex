@@ -39,7 +39,11 @@ The following figures are the computations of the output voltage gain and its ph
 \subsection{Comparasion}
 \label{sec:comparasion}
 
+Here, the results obtained with each software / approach are presented.
 
-The obtained obtained values in the tables are approximatly the same and in the plots aswell. The differences in the plots are present mostly at higher frequencies, after the peak, which occurs at about 1kHz and 40dBs in both analysis, as intended. After those frequencies, and namely around 10kHz, the gain obtained with Ngspice drops a lot faster. The aformentioned discrepancies may be due to the fact that Ngpice uses models a lot more complex than the ones considered in our theoretical analysis. Specifically, the said increase in complexity and exactitude (with Ngspice) may lead to a greater effect of the input impedance drop at higher frequencies, that may naturally result in a greater drop in the output voltage gain.
+
+
+
+The obtained obtained values in the tables are approximatly the same and in the plots aswell. The differences in the gain plots are present mostly at higher frequencies, after the peak, which occurs at about 1kHz and 40dBs in both analysis, as intended. After those frequencies, and namely around 10kHz, the gain obtained with Ngspice drops a lot faster. The aformentioned discrepancies may be due to the fact that Ngpice uses models a lot more complex than the ones considered in our theoretical analysis. Specifically, the said increase in complexity and exactitude (with Ngspice) may lead to a greater effect of the input impedance drop at higher frequencies, that may naturally result in a greater drop in the output voltage gain. The differences in the phase plots also come from the greater complexity in the models used by the Ngspice software. Ngspice performs the simulation considering that the AMP-OP has two capacitors and, in the theoretical analysis, they are disregarded. As such, the Ngspice plot predicts a decrease of an extra 180 degrees (-90 degrees for each capacitor), which is not expected in the Octave plot.
 
 Note that, considering both the simulation and the theoretical analysis approach, the circuit does function like a passband circuit, with a narrow yet significant bandwith, centered around the frequency and gain established as goals. as seen in the presented figures.
