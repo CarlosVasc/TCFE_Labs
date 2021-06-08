@@ -17,6 +17,9 @@ R4 = 100e3
 gain = (R1.*2.*pi.*f.*C1./(1+R1.*j.*2.*pi.*f.*C1)).*(1 + R4/R3).*(1./(j.*2.*pi.*f.*C2.*R2 + 1));
 gain_db=20*log10(abs(gain));
 
+fase= arg(gain).*180./pi;
+
+
 I_max=find (gain_db==max(gain_db));
 f_max=f(I_max);
 
@@ -36,10 +39,9 @@ cost=cost_amp+(1e-3*(R1 + R2 + R3 + R4)+1e6*(C1 + C2))
 Merit = 1/(cost * (G_desvio + F_desvio+1e-6))
 %------------- Export ------------
 fid = figure ();
-semilogx(f, gain_db);
+semilogx(f, gain_db,";Gain (db);",f,fase,";Phase;");
 title("Gain");
-legend("v_o(f)/v_i(f)");
-ylabel("Gian (dB)")
+ylabel("Gian (dB) and Phase")
 xlabel("frequency (Hz)")
 print(fid ,"Gain_teo.eps","-depsc");
 
