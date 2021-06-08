@@ -2,5 +2,16 @@
 \label{sec:introduction}
 
 % state the learning objective 
-The objective of this laboratory assignment is to study a circuit containing a
+The objective of this laboratory assignment is to analyse and optimize a bandpass filter using an OP-AMP, aiming for a central frequency of $1kHz$ and a gain at central frequency of $40dB$. The circuit used is presented in Figure  \ref{fig:circuit}. In order to optimize the circuit, it was possible to manipulate the values of several parameters, which had assigned costs, given by the Professor. The \textit{Merit} score is obtained as a function of the chosen architecture's cost and the performance of the circuit.
 
+
+\begin{figure}[h] \centering
+\includegraphics[width=0.9\linewidth]{circuito.pdf}
+\caption{Bandpass filter using OP-AMP.}
+\label{fig:circuit}
+\end{figure}
+
+The parameters changed (in relation to the circuit given by the Professor) are given in Section~\ref{sec:analysis}, along with its cost and merit.
+
+
+In Section~\ref{sec:analysis}, using \textit{Octave}, a theoretical analysis is presented, in which we describe the theoretical model used to analyze the circuit are presented. In Section~\ref{sec:simulation}, the circuit is analyzed by simulation, using the Ngspice software, and a comparasion between theoritical and simulation results is made. The conclusions of this study are outlined in Section~\ref{sec:conclusion}.

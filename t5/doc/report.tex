@@ -15,9 +15,20 @@
 \hyphenation{GTKWave}
 \usepackage{listings}
 \usepackage[all]{nowidow}
+\usepackage{caption}
+
+\usepackage{systeme}
+  % tables
+\usepackage{multirow}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{supertabular}
+
 
 %blind text
 \usepackage{lipsum}
+
+\usepackage{comment} % comment out large bodies of text
 
 \usepackage{graphicx}
 \graphicspath{ {./} {../../figlib/} }
@@ -63,7 +74,7 @@
 	          bookmarksopen=false,    % don't expand bookmarks
 	          bookmarksnumbered=true, % number bookmarks
 	          pdftitle={report},
-            pdfauthor={Andre C. Marta},
+            pdfauthor={Conanga, H.P.},
 %            pdfsubject={Thesis Title},
 %            pdfkeywords={Thesis Keywords},
             pdfstartview=FitV,
@@ -72,6 +83,11 @@
 \usepackage[numbers,sort&compress]{natbib} % <<<<< References in numbered list [1],[2],...
 \usepackage{subcaption} 
 \usepackage{mdframed}
+\usepackage{amsmath} % facilitates writing math formulas and improves the typographical quality of their output
+\usepackage{siunitx} % facilitates writing SI units, along with other SI unit related features
+\setcounter{MaxMatrixCols}{20} % enables latex to make matrices w/ 20 columns
+\usepackage{float} % not sure
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %     Begin Document                                                   %
