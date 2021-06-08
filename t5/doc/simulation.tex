@@ -17,7 +17,7 @@ Time and, more importantly, frequency analysis were performed in order to evalua
     \caption{Main results measured in NGSpice software.}
  \end{table}
 
-
+Note that the gain at 1kHz isn't in dBs, but in volts: it corresponds to 42.02628 dBs.
 The following figures are the computations of the output voltage gain and its phase as a function of frequency.
 
 \begin{figure}[!htb]
@@ -38,3 +38,8 @@ The following figures are the computations of the output voltage gain and its ph
 
 \subsection{Comparasion}
 \label{sec:comparasion}
+
+
+The obtained obtained values in the tables are approximatly the same and in the plots aswell. The differences in the plots are present mostly at higher frequencies, after the peak, which occurs at about 1kHz and 40dBs in both analysis, as intended. After those frequencies, and namely around 10kHz, the gain obtained with Ngspice drops a lot faster. The aformentioned discrepancies may be due to the fact that Ngpice uses models a lot more complex than the ones considered in our theoretical analysis. Specifically, the said increase in complexity and exactitude (with Ngspice) may lead to a greater effect of the input impedance drop at higher frequencies, that may naturally result in a greater drop in the output voltage gain.
+
+Note that, considering both the simulation and the theoretical analysis approach, the circuit does function like a passband circuit, with a narrow yet significant bandwith, centered around the frequency and gain established as goals. as seen in the presented figures.
